@@ -1,0 +1,109 @@
+<div  *ngIf="mainpageflag">
+<div class="main">
+
+    <!-- Actual search box -->
+    <div class="form-group has-search">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search">
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="column" >
+
+       <p style="font-weight: bold;margin-left: 245px;">Tutorials List</p>
+        <ul class="list-group listgroup" *ngFor="let data of tutorialsdata | appFilter: searchText">
+            <li class="list-group-item "(click)="onclickTutorial(data)" 
+            [ngClass]="{active: isActive(data)}">{{data.title}}</li>
+          </ul>
+
+          <button type="button" class="btn btn-danger" style="margin-left: 245px;margin-top:10px" (click)="onRemoveall()">RemoveAll</button>
+    </div>
+    <div class="column" *ngIf="tutorialflag">
+        <p style="font-weight: bold;">Tutorials</p>
+        <div class="card" style="width: 25rem;">
+            <div class="card-body">
+               <div style="display: flex;"><h5 >Title: </h5>{{selected.title}} </div> 
+                <div style="display:flex ;">
+                    <h5 >Description:</h5>{{selected.description}}
+                </div>
+                <div style="display:flex ;" *ngIf="selected.published ==0">
+                    <h5 >Status:</h5>Pending
+                </div>
+                <div style="display:flex ;" *ngIf="selected.published ==1">
+                    <h5 >Status:</h5>Published
+                </div>
+                <button type="button" class="btn btn-warning" (click)="edit(selected)">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="container py-3" *ngIf="!mainpageflag">
+    <div class="row">
+        <div class="col-md-12">
+
+
+
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <span class="anchor" id="formLogin"></span>
+
+
+                    <div class="card-body">
+                        <form #updateForm="ngForm" name="updateForm" >
+                            <div class="form-group">
+                                <label for="uname1">Title</label>
+                                <input required type="text" class="form-control" id="title" name="title"  [(ngModel)]="tutorialData.title" #title="ngModel" >
+                                <small  class="errorLabel" *ngIf="title.invalid && (title.dirty || title.touched ||addForm.submitted)">
+                                    Please enter title.
+                                </small>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input required type="text" class="form-control" id="description" name="description"  [(ngModel)]="tutorialData.description" #description="ngModel" >
+                                <small  class="errorLabel" *ngIf="description.invalid && (description.dirty || description.touched ||addForm.submitted)">
+                                    Please enter description.
+                                </small>
+                            </div>
+                            <div class="form-group" *ngIf="tutorialData.published == 0">
+                                <label>Status: </label> Pending
+                               
+        
+                            </div>
+                            <div class="form-group" *ngIf="tutorialData.published == 1">
+                                <label>Status: </label>Published
+                              
+        
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <button type="button" class="btn btn-primary" *ngIf="tutorialData.published == 0" (click)="onpublished(selected.id)">Publish</button>
+                                <button type="button" class="btn btn-primary" *ngIf="tutorialData.published == 1" (click)="onunpublished(selected.id)">Unpublish</button>
+                                <button type="button" class="btn btn-danger" (click)="deletetutorial(selected.id)">Delete</button>
+                                <button type="button" class="btn btn-success" (click)="onUpdate(selected.id)">Update</button>
+                            </div>
+                            <div *ngIf="updateFlag">
+                                <center><P style="font-weight: bold;">{{updatedata.message}} </P></center>
+                              
+                                
+                            </div>
+                            
+                        </form>
+                    </div>
+                    <!--/card-block-->
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <!--/col-->
+    </div>
+    <!--/row-->
+</div>
+<!--/container-->
+
