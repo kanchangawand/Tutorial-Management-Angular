@@ -9,6 +9,7 @@ import {environment} from '../../environments/environment';
 export class TutorialsService {
 
   url: any;
+  
   constructor(private http: HttpClient,private utilService:UtilService) { 
     this.url =environment.backend;
   }
