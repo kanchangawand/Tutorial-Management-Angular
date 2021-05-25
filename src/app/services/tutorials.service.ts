@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { UtilService } from './util.service';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TutorialsService {
 
-  url: any = 'https://tutorial-node-spontaneous-kookaburra-wv.eu-gb.mybluemix.net';
-  constructor(private http: HttpClient,private utilService:UtilService) { }
+  url: any;
+  constructor(private http: HttpClient,private utilService:UtilService) { 
+    this.url =environment.backend;
+  }
 
 
   addtutorial(data){
